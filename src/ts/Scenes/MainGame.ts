@@ -7,7 +7,7 @@ export default class MainGame extends Phaser.Scene {
 	 */
 	public static Name = "MainGame";
 
-	private playerList = [];
+	private playerList: Player[] = [];
 
 	public preload(): void {
 		// Preload as needed.
@@ -28,13 +28,34 @@ export default class MainGame extends Phaser.Scene {
 			console.log(netService.socket.connected); // false
 		});
 
-		netService.socket.on("currentPlayers", (players: any[]) => {
+		netService.socket.on("currentPlayers", (players: Player[]) => {
 			players.forEach(player => {
 				this.playerList.push(player);
-				this.add.circle(player.x, player.y, 40, player.color);
+				player.circle = this.add.circle(player.x, player.y, 40, player.color);
 			})
 		});
 
+		netService.socket.on("newPlayer", (player: Player) => {
+			this.playerList.push(player);
+			this.add.circle(player.x, player.y, 40, player.color);
+		});
 
+		netService.socket.on("playerDisconnected", (playerId: string) => {
+			this.playerList = this.playerList.filter(player => {
+				if (player.playerId === playerId) {
+					player.circle.destroy();
+				}
+				return player.playerId !== playerId;
+			});
+		});
 	}
+}
+
+class Player {
+	playerId: string;
+	rotation: number;
+	x: number;
+	y: number;
+	color: number;
+	circle: Phaser.GameObjects.Arc;
 }

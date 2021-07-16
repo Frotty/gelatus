@@ -44,7 +44,7 @@ io.on('connection', function (socket) {
 		console.log('player [' + socket.id + '] disconnected')
 		delete playerMap[socket.id]
 		playerList = playerList.filter(plr => plr.playerId != socket.id)
-		io.emit('playerDisconnected', socket.id)
+		io.emit('playerDisconnected', socket.id);
 	})
 
 	socket.on('playerMovement', function (movementData) {
