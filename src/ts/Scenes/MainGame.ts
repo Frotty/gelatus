@@ -1,3 +1,4 @@
+import { netService } from "../Services/NetService";
 import Utilities from "../Utilities";
 
 export default class MainGame extends Phaser.Scene {
@@ -13,6 +14,16 @@ export default class MainGame extends Phaser.Scene {
 	public create(): void {
 		Utilities.LogSceneMethodEntry("MainGame", "create");
 
-		this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, "Phaser-Logo-Small");
+		netService.connect();
+
+		netService.socket.on("connect", () => {
+			console.log(this.socket.connected); // true
+		});
+
+		netService.socket.on("disconnect", () => {
+			console.log(this.socket.connected); // false
+		});
+
+		this.add.circle(100, 100, 40, 0xffbbcc);
 	}
 }

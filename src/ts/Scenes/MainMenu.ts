@@ -1,3 +1,4 @@
+import { netService } from "../Services/NetService";
 import Utilities from "../Utilities";
 import MainGame from "./MainGame";
 import MainSettings from "./MainSettings";
