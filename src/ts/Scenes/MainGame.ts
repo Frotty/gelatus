@@ -16,7 +16,11 @@ export default class MainGame extends Phaser.Scene {
 	}
 
 	public update(time: number, delta: number): void {
-		netService.socket.emit('playerMovement', { angle: Math.atan2(this.input.mousePointer.x - 400, this.input.mousePointer.y - 300) })
+		netService.socket.emit('playerMovement', { angle: Math.atan2(this.input.mousePointer.y - 300, this.input.mousePointer.x - 400) })
+		const currentPlayer = this.playerMap.get(netService.socket.id);
+		if (currentPlayer !== undefined) {
+			this.cameras.main.setScroll(currentPlayer.circle.x - 400, currentPlayer.circle.y - 300)
+		}
 	}
 
 	public create(): void {
@@ -38,7 +42,7 @@ export default class MainGame extends Phaser.Scene {
 				const playerObj = new Player(player.playerId, player.rotation, player.x, player.y, player.color)
 				playerObj.circle = this.add.circle(player.x, player.y, 40, player.color);
 				this.playerList.push(playerObj);
-				this.playerMap[player.playerId] = playerObj;
+				this.playerMap.set(player.playerId, playerObj);
 			})
 		});
 
@@ -46,7 +50,7 @@ export default class MainGame extends Phaser.Scene {
 			const playerObj = new Player(player.playerId, player.rotation, player.x, player.y, player.color)
 			playerObj.circle = this.add.circle(player.x, player.y, 40, player.color);
 			this.playerList.push(playerObj);
-			this.playerMap[player.playerId] = playerObj;
+			this.playerMap.set(player.playerId, playerObj);
 		});
 
 		netService.socket.on("playerDisconnected", (playerId: string) => {
@@ -61,7 +65,7 @@ export default class MainGame extends Phaser.Scene {
 
 		netService.socket.on("playersUpdate", (players: Player[]) => {
 			players.forEach(player => {
-				this.playerMap[player.playerId].update(player.x, player.y, player.rotation);
+				this.playerMap.get(player.playerId).update(player.x, player.y, player.rotation);
 			})
 		});
 	}
