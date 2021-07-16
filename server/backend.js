@@ -48,14 +48,24 @@ io.on('connection', function (socket) {
 	})
 
 	socket.on('playerMovement', function (movementData) {
-		// players[socket.id].x = movementData.x
-		// players[socket.id].y = movementData.y
-		// players[socket.id].rotation = movementData.rotation
-
-		// socket.broadcast.emit('playerMoved', players[socket.id])
+		playerMap[socket.id].rotation = movementData.angle;
 	})
 })
 
+setInterval(() => {
+	updateServer();
+}, 1000/60);
+
 function getRandomColor() {
 	return '0x' + Math.floor(Math.random() * 16777215).toString(16)
+}
+
+function updateServer() {
+	playerList.forEach(player => updatePlayer(player))
+	io.emit('playersUpdate', playerList)
+}
+
+function updatePlayer(player) {
+	player.x += Math.cos(player.rotation);
+	player.y += Math.sin(player.rotation);
 }
