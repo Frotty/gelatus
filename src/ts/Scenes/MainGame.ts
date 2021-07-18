@@ -11,6 +11,8 @@ export default class MainGame extends Phaser.Scene {
 
 	private playerMap: Map<string, Player> = new Map();
 
+	private minimap: Phaser.Cameras.Scene2D.Camera;
+
 	public preload(): void {
 		// Preload as needed.
 	}
@@ -22,18 +24,20 @@ export default class MainGame extends Phaser.Scene {
 			this.cameras.main.setScroll(currentPlayer.circle.x - 400, currentPlayer.circle.y - 300)
 		}
 	}
-
+	
 	public create(): void {
 		Utilities.LogSceneMethodEntry("MainGame", "create");
-
+		
 		netService.connect();
-
-
+		
 		netService.socket.on("connect", () => {
+			this.minimap = this.cameras.add(600, 400, 200, 200).setZoom(0.1);
+			this.minimap.setBackgroundColor('rgba(255,255,255,0.2)');
 			console.log(netService.socket.connected); // true
 		});
 
 		netService.socket.on("disconnect", () => {
+			this.minimap.destroy();
 			console.log(netService.socket.connected); // false
 		});
 
