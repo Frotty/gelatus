@@ -12,7 +12,7 @@ export default class MainGame extends Phaser.Scene {
 	private playerMap: Map<string, Player> = new Map();
 
 	public preload(): void {
-		// Preload as needed.
+		this.load.image("dirt_2", "assets/dirt_2.png");
 	}
 
 	public update(time: number, delta: number): void {
@@ -26,8 +26,9 @@ export default class MainGame extends Phaser.Scene {
 	public create(): void {
 		Utilities.LogSceneMethodEntry("MainGame", "create");
 
-		netService.connect();
+		this.add.sprite(0, 0, "dirt_2")
 
+		netService.connect();
 
 		netService.socket.on("connect", () => {
 			console.log(netService.socket.connected); // true
