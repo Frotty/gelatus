@@ -1,12 +1,12 @@
 {
-	"compilerOptions": {
-		"target": "es2017",
-		"module": "commonjs",
-		"esModuleInterop": true,
-		"rootDir": "./",
-		"moduleResolution": "node",
-		"skipLibCheck": true,
-		"outDir": "./build"
-	},
-	"exclude": ["**/node_modules/@types/webpack/**"]
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "rootDir": "./",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "outDir": "./build"
+  },
+  "exclude": ["**/node_modules/@types/webpack/**"]
 }

@@ -1,40 +1,40 @@
 {
-	"name": "phaser-3-vsc-typescript-nodejs",
-	"version": "0.0.1",
-	"description": "Starter Project for Phaser 3 with TypeScript, NodeJS, and VS Code.",
-	"repository": {
-		"type": "git",
-		"url": "git+ssh://git@github.com:JamesSkemp/phaser-3-vsc-typescript-nodejs.git"
-	},
-	"private": true,
-	"author": {
-		"name": "James Skemp",
-		"email": "strivinglife@gmail.com",
-		"url": "https://jamesrskemp.com"
-	},
-	"homepage": "https://github.com/JamesSkemp/phaser-3-vsc-typescript-nodejs",
-	"dependencies": {
-		"phaser": "^3.55.2",
-		"socket.io": "^4.1.3",
-		"socket.io-client": "^4.1.3"
-	},
-	"scripts": {
-		"build": "webpack --mode production",
-		"build-dev": "webpack --mode none",
-		"start:dev": "webpack serve --mode production",
-		"server:dev": "tsc --project ./server/tsconfig.json && node ./server/build/backend.js",
-		"lint": "eslint . --ext .js,.jsx,.ts,.tsx || (exit 0)"
-	},
-	"devDependencies": {
-		"@typescript-eslint/eslint-plugin": "^4.26.1",
-		"@typescript-eslint/parser": "^4.26.1",
-		"clean-webpack-plugin": "^3.0.0",
-		"copy-webpack-plugin": "^9.0.1",
-		"eslint": "^7.30.0",
-		"ts-loader": "^9.2.3",
-		"typescript": "^4.3.5",
-		"webpack": "^5.45.1",
-		"webpack-cli": "^4.7.2",
-		"webpack-dev-server": "^3.11.2"
-	}
+  "name": "phaser-3-vsc-typescript-nodejs",
+  "version": "0.0.1",
+  "description": "Starter Project for Phaser 3 with TypeScript, NodeJS, and VS Code.",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:JamesSkemp/phaser-3-vsc-typescript-nodejs.git"
+  },
+  "private": true,
+  "author": {
+    "name": "James Skemp",
+    "email": "strivinglife@gmail.com",
+    "url": "https://jamesrskemp.com"
+  },
+  "homepage": "https://github.com/JamesSkemp/phaser-3-vsc-typescript-nodejs",
+  "dependencies": {
+    "phaser": "^3.55.2",
+    "socket.io": "^4.1.3",
+    "socket.io-client": "^4.1.3"
+  },
+  "scripts": {
+    "build": "webpack --mode production",
+    "build-dev": "webpack --mode none",
+    "start:dev": "webpack serve --mode production",
+    "server:dev": "tsc --project ./server/tsconfig.json && node ./server/build/backend.js",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx || (exit 0)"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.26.1",
+    "@typescript-eslint/parser": "^4.26.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^9.0.1",
+    "eslint": "^7.30.0",
+    "ts-loader": "^9.2.3",
+    "typescript": "^4.3.5",
+    "webpack": "^5.45.1",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
+  }
 }
