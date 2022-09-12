@@ -19,6 +19,8 @@
 		"socket.io-client": "^4.1.3"
 	},
 	"scripts": {
+		"ngrokd": "ngrok diagnose",
+		"ngrok": "ngrok http 5000 -config=./ngrok.yml --host-header=rewrite",
 		"build": "webpack --mode production",
 		"build-dev": "webpack --mode none",
 		"start:dev": "webpack serve --mode production",
@@ -31,6 +33,7 @@
 		"clean-webpack-plugin": "^3.0.0",
 		"copy-webpack-plugin": "^9.0.1",
 		"eslint": "^7.30.0",
+		"ngrok": "^4.3.3",
 		"ts-loader": "^9.2.3",
 		"typescript": "^4.3.5",
 		"webpack": "^5.45.1",

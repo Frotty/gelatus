@@ -12,10 +12,11 @@ const io = socketIO(server, {
 })
 
 app.set('port', 5000)
-app.use('/static', express.static(__dirname + '/static'))
+app.use('/static', express.static('public'))
+app.use('/assets', express.static('public/assets'))
 
 app.get('/', function (request, response) {
-	response.sendFile(path.join(__dirname, 'index.html'))
+	response.sendFile(path.join(__dirname, '../../public/index.html'))
 })
 
 server.listen(5000, function () {
@@ -60,8 +61,8 @@ function updateServer() {
 }
 
 function updatePlayer(player) {
-	player.x += Math.cos(player.rotation);
-	player.y += Math.sin(player.rotation);
+	player.x += Math.cos(player.rotation) * 0.05;
+	player.y += Math.sin(player.rotation) * 0.05;
 }
 
 class Player {
