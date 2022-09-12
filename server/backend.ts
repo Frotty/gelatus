@@ -61,8 +61,8 @@ function updateServer() {
 }
 
 function updatePlayer(player) {
-	player.x += Math.cos(player.rotation) * 0.05;
-	player.y += Math.sin(player.rotation) * 0.05;
+	player.x += Math.cos(player.rotation) * 0.25;
+	player.y += Math.sin(player.rotation) * 0.25;
 }
 
 class Player {
