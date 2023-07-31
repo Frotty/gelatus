@@ -20,6 +20,11 @@ Run `npm run server:dev` to compile the backend to javascript and run that with 
 ## How to Build the Site
 
 Run `npm run build` after modifying code to populate the **public** directory with the final site contents.
+This is required for sharing the frontend with other players. After building the app use
+
+`npm run ngrok`
+
+Which will give you a URL where other players can connect to.
 
 ## Upgrading Phaser
 
