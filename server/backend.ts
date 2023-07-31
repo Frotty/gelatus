@@ -12,7 +12,7 @@ const io = socketIO(server, {
 })
 
 app.set('port', 5000)
-app.use('/static', express.static('public'))
+app.use('/', express.static('public'))
 app.use('/assets', express.static('public/assets'))
 
 app.get('/', function (request, response) {
