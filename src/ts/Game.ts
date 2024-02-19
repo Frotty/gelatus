@@ -12,15 +12,18 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
 	height: 600,
 	type: Phaser.AUTO,
 	parent: "content",
-	title: "Starter Project for Phaser 3 with Visual Studio Code, TypeScript, and NodeJS"
+	title: "Gelatus"
 };
 
 export default class Game extends Phaser.Game {
-	constructor(config: Phaser.Types.Core.GameConfig) {
+	public playerName: string;
+
+	constructor(config: Phaser.Types.Core.GameConfig, name: string) {
 		Utilities.LogSceneMethodEntry("Game", "constructor");
 
 		super(config);
 
+		this.playerName = name;
 		this.scene.add(Boot.Name, Boot);
 		this.scene.add(Preloader.Name, Preloader);
 		this.scene.add(SplashScreen.Name, SplashScreen);
@@ -51,8 +54,9 @@ function resize(): void {
 }
 
 window.onload = (): void => {
+	const userName = prompt("Please enter your name:", "");
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const game = new Game(gameConfig);
+	const game = new Game(gameConfig, userName);
 	// Uncomment the following two lines if you want the game to scale to fill the entire page, but keep the game ratio.
 	resize();
 	window.addEventListener("resize", resize, true);
