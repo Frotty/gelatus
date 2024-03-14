@@ -3,9 +3,10 @@
 		"target": "es2017",
 		"module": "commonjs",
 		"esModuleInterop": true,
-		"rootDir": "./src/ts/",
 		"sourceMap": true,
 		"moduleResolution": "node",
+		"outDir": "./build/"
 	},
 	"exclude": ["./server/"],
+	"include": ["./src/ts/**/*", "./shared/**/*"]
 }

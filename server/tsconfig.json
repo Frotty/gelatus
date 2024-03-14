@@ -3,10 +3,11 @@
 		"target": "es2017",
 		"module": "commonjs",
 		"esModuleInterop": true,
-		"rootDir": "./",
+		"sourceMap": true,
 		"moduleResolution": "node",
 		"skipLibCheck": true,
 		"outDir": "./build"
 	},
-	"exclude": ["**/node_modules/@types/webpack/**"]
+	"exclude": ["**/node_modules/@types/webpack/**"],
+	"include": ["./**/*", "../shared/**/*"]
 }

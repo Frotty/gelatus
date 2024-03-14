@@ -18,7 +18,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
 		forceSetTimeOut: true,
 	},
 	scale: {
-        mode: Phaser.Scale.FIT, // Resize the game to fill the whole window
+        mode: Phaser.Scale.RESIZE, // Resize the game to fill the whole window
         autoCenter: Phaser.Scale.CENTER_BOTH // Center the game horizontally and vertically
     },
 };
@@ -84,6 +84,6 @@ window.onload = (): void => {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	
 	// Uncomment the following two lines if you want the game to scale to fill the entire page, but keep the game ratio.
-	resize();
-	window.addEventListener("resize", resize, true);
+	// resize();
+	// window.addEventListener("resize", resize, true);
 };

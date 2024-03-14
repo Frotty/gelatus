@@ -1,3 +1,6 @@
+import '../shared/Constants';
+import { ARENA_SIZE, getSpeed } from '../shared/Constants';
+
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const express = require("express");
@@ -76,7 +79,7 @@ function updateServer() {
 
 	io.emit("playersUpdate", playerList);
 
-	if (foodList.length < 100) {
+	if (foodList.length < 150) {
 		addFood();
 	}
 }
@@ -88,7 +91,7 @@ function addFood() {
 
 	do {
 		isColliding = false;
-		food = new Food(Math.random() * 2000, Math.random() * 2000);
+		food = new Food(Math.random() * ARENA_SIZE, Math.random() * ARENA_SIZE);
 
 		for (const player of playerList) {
 			if (isPlayerCollidingWithFood(player, food)) {
@@ -105,7 +108,7 @@ function addFood() {
 }
 
 function updatePlayer(player: Player) {
-	const speed = Math.max(1, 6 - (3 * player.size / 200));
+	const speed = getSpeed(player.size);
 	player.x += Math.cos(player.rotation) * speed;
 	player.y += Math.sin(player.rotation) * speed;
 
@@ -148,8 +151,6 @@ function removePlayer(player: Player) {
 	playerList = playerList.filter(p => p.playerId !== player.playerId);
 	playerMap.delete(player.playerId);
 }
-
-const ARENA_SIZE = 2000;
 
 function keepInBounds(player: Player) {
 	const minBound = player.size;

@@ -1,3 +1,4 @@
+import { ARENA_SIZE, getSpeed } from "../../../shared/Constants";
 import Game from "../Game";
 import { netService } from "../Services/NetService";
 import Utilities from "../Utilities";
@@ -14,20 +15,21 @@ export default class MainGame extends Phaser.Scene {
 
 	public preload(): void {
 		this.load.image("tiled", "assets/tiled.jpg");
+		this.load.image("bgtile", "assets/bg.jpg");
 	}
 
 	public update(time: number, delta: number): void {
 		const angle = Math.atan2(
-				this.input.mousePointer.y - 300,
-				this.input.mousePointer.x - 400
+				this.input.mousePointer.y - (window.innerHeight/2),
+				this.input.mousePointer.x - (window.innerWidth/2)
 			);
 		
 		const currentPlayer = this.playerMap.get(netService.socket.id);
 		this.playerList.forEach((player) => {
 			if (player !== undefined) {
 				const minBound = player.size;
-				const maxBound = 2000 - player.size;
-				const speed = Math.max(1, 6 - (3 * player.size) / 200);
+				const maxBound = ARENA_SIZE - player.size;
+				const speed = getSpeed(player.size);
 				const rotation = player == currentPlayer ? angle : player.rotation;
 				const movementX = Math.cos(rotation) * speed;
 				const movementY = Math.sin(rotation) * speed;
@@ -73,9 +75,9 @@ export default class MainGame extends Phaser.Scene {
 	public create(): void {
 		Utilities.LogSceneMethodEntry("MainGame", "create");
 
-		this.add
-			.tileSprite(0, 0, 2000, 2000, "tiled")
-			.setOrigin(0, 0);
+		this.add.tileSprite(-ARENA_SIZE, -ARENA_SIZE, ARENA_SIZE * 3, ARENA_SIZE * 3, "bgtile").setOrigin(0, 0);
+
+		this.add.tileSprite(0, 0, ARENA_SIZE, ARENA_SIZE, "tiled").setOrigin(0, 0);
 
 		this.cameras.main.setZoom(0.75);
 
@@ -239,7 +241,7 @@ class Player {
     this.circle = scene.add.circle(this.x, this.y, this.size, this.color);
     this.text = scene.add.text(this.x, this.y, serverPlayer.name, {
       font: "40px Arial",
-      color: "red",
+      color: "white",
     });
     this.text.setOrigin(0.5, 0.5);
   }

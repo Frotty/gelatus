@@ -8,7 +8,7 @@
     "build": "webpack --mode production",
     "build-dev": "webpack --mode none",
     "start:dev": "webpack serve --mode production",
-    "server:dev": "concurrently \"tsc --project ./server/tsconfig.json --watch\" \"nodemon ./server/build/backend.js\"",
+    "server:dev": "concurrently \"tsc --project ./server/tsconfig.json --watch\" \"nodemon ./server/build/server/backend.js\"",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx || (exit 0)"
   },
   "repository": {
