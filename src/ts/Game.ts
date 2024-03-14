@@ -62,9 +62,27 @@ function resize(): void {
 }
 
 window.onload = (): void => {
-	const userName = prompt("Please enter your name:", "");
+	const dialog = document.getElementById("nameDialog") as HTMLDialogElement;
+	const startButton = document.getElementById("startButton");
+	const playerNameInput = document.getElementById("playerName") as HTMLInputElement;
+
+	if (typeof dialog.showModal === "function") {
+		dialog.showModal();
+
+		startButton?.addEventListener("click", () => {
+		if (playerNameInput.value.trim() !== "") {
+			dialog.close();
+			new Game(gameConfig, playerNameInput.value);
+		} else {
+			alert("Please enter your name to start the game.");
+		}
+		});
+	} else {
+		// Fallback for browsers that don't support <dialog>
+		alert("Your browser doesn't support HTML dialog elements. Please update your browser to play.");
+	}
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const game = new Game(gameConfig, userName);
+	
 	// Uncomment the following two lines if you want the game to scale to fill the entire page, but keep the game ratio.
 	resize();
 	window.addEventListener("resize", resize, true);

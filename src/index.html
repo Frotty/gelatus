@@ -4,13 +4,22 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1" />
-	<title>Starter Project for Phaser 3 with TypeScript</title>
+	<title>Gelatus.io</title>
 	<link rel="shortcut icon" href="favicon.ico" />
 	<link rel="stylesheet" href="/app.css" type="text/css" />
 	<script src="/lib/phaser.min.js"></script>
 </head>
 <body>
-	<!--Update the heading below, and title above, as needed.-->
+	<dialog id="nameDialog">
+        <form method="dialog">
+            <label for="playerName">Enter Player Name:</label>
+            <input type="text" id="playerName" name="playerName" required>
+            <menu>
+                <button id="startButton">Start Game</button>
+            </menu>
+        </form>
+    </dialog>
+
 	<div id="content"></div>
 	<!--If using the project the TypeScript files will automatically be combined into the following file. Update as needed.-->
 	<script src="/app.js"></script>
