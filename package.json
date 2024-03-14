@@ -8,7 +8,7 @@
     "build": "webpack --mode production",
     "build-dev": "webpack --mode none",
     "start:dev": "webpack serve --mode production",
-    "server:dev": "tsc --project ./server/tsconfig.json && node ./server/build/backend.js",
+    "server:dev": "concurrently \"tsc --project ./server/tsconfig.json --watch\" \"nodemon ./server/build/backend.js\"",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx || (exit 0)"
   },
   "repository": {
@@ -30,14 +30,16 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.26.1",
     "@typescript-eslint/parser": "^4.26.1",
-    "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^9.0.1",
+    "clean-webpack-plugin": "^4.0.0",
+    "concurrently": "^8.2.2",
+    "copy-webpack-plugin": "^12.0.2",
     "eslint": "^7.30.0",
     "ngrok": "^5.0.0-beta.2",
+    "nodemon": "^3.1.0",
     "ts-loader": "^9.2.3",
     "typescript": "^4.3.5",
-    "webpack": "^5.45.1",
-    "webpack-cli": "^4.7.2",
-    "webpack-dev-server": "^3.11.2"
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.3"
   }
 }

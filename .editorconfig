@@ -3,10 +3,6 @@
 # top-most EditorConfig file
 root = true
 
-[*.{ts,tsx}]
-indent_style = tab
-trim_trailing_whitespace = true
-
-[*.yml]
 indent_style = space
+trim_trailing_whitespace = true
 indent_size = 2
