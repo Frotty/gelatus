@@ -177,9 +177,40 @@ class Food {
 		this.x = x;
 		this.y = y;
 		this.id = id;
-		this.circle = scene.add.circle(x, y, 5, parseInt("AAFF00", 16));
+		this.circle = scene.add.circle(x, y, 5, parseInt(generateVibrantColor(), 16));
 		foodMap.set(id, this);
 	}
+}
+
+function generateVibrantColor() {
+  // Generate a random hue value (0-360 degrees)
+  const hue = Math.floor(Math.random() * 360);
+
+  // Set high saturation and brightness values
+  const saturation = 75 + Math.floor(Math.random() * 25); // 75-100%
+  const brightness = 75 + Math.floor(Math.random() * 25); // 75-100%
+
+  // Convert HSB to RGB, then to HEX
+  const rgb = hsbToRgb(hue, saturation, brightness);
+  const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+
+  return hex;
+}
+
+function hsbToRgb(h, s, b) {
+  s /= 100;
+  b /= 100;
+  const k = (n) => (n + h / 60) % 6;
+  const f = (n) => b - b * s * Math.max(Math.min(k(n), 4 - k(n), 1), 0);
+  return {
+    r: Math.floor(f(5) * 255),
+    g: Math.floor(f(3) * 255),
+    b: Math.floor(f(1) * 255),
+  };
+}
+
+function rgbToHex(r, g, b) {
+  return "" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
 const foodMap = new Map<number, Food>();
