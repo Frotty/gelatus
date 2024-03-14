@@ -12,7 +12,15 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
 	height: 600,
 	type: Phaser.AUTO,
 	parent: "content",
-	title: "Gelatus"
+	title: "Gelatus",
+	fps: {
+		target: 60,
+		forceSetTimeOut: true,
+	},
+	scale: {
+        mode: Phaser.Scale.FIT, // Resize the game to fill the whole window
+        autoCenter: Phaser.Scale.CENTER_BOTH // Center the game horizontally and vertically
+    },
 };
 
 export default class Game extends Phaser.Game {

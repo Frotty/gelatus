@@ -28,13 +28,7 @@ let playerList: Player[] = [];
 
 io.on("connection", function (socket) {
 	console.log("player [" + socket.id + "] connected");
-	const player = new Player(
-		socket.id,
-		0,
-		Math.random() * 2000,
-		Math.random() * 2000,
-		getRandomColor()
-	);
+	const player = new Player(socket.id, 20 + Math.random() * 1800, 20 + Math.random() * 1800, 0, getRandomColor());
 	console.log(JSON.stringify(player));
 
 	playerMap.set(socket.id, player);
@@ -88,25 +82,37 @@ function updateServer() {
 }
 
 function addFood() {
-	const food = new Food(Math.random() * 2000, Math.random() * 2000);
+	let food;
+	let isColliding;
+	let attempts = 0;
+
+	do {
+		isColliding = false;
+		food = new Food(Math.random() * 2000, Math.random() * 2000);
+
+		for (const player of playerList) {
+			if (isPlayerCollidingWithFood(player, food)) {
+				isColliding = true;
+				break;
+			}
+		}
+
+		attempts++;
+	} while (isColliding && attempts < 100);
+	
 	foodList.push(food);
 	io.emit("newFood", food);
 }
 
 function updatePlayer(player: Player) {
-	player.x += Math.cos(player.rotation) * Math.max(2, (6 - (3 * player.size / 1000)));
-	player.y += Math.sin(player.rotation) * Math.max(2, (6 - (3 * player.size / 1000)));
+	const speed = Math.max(1, 6 - (3 * player.size / 200));
+	player.x += Math.cos(player.rotation) * speed;
+	player.y += Math.sin(player.rotation) * speed;
 
 	keepInBounds(player);
 
 	for (const food of foodList) {
-		if (
-			food.id !== -1 &&
-			Math.sqrt(
-				Math.pow(player.x - food.x, 2) + Math.pow(player.y - food.y, 2)
-			) <=
-				player.size + 3
-		) {
+		if (food.id !== -1 && isPlayerCollidingWithFood(player, food)) {
 			player.size++;
 			io.emit("foodEaten", food);
 			food.id = -1;
@@ -114,48 +120,43 @@ function updatePlayer(player: Player) {
 	}
 
 	for (const otherPlayer of playerList) {
-		if (otherPlayer.playerId !== player.playerId) {
-			if (
-				Math.sqrt(
-					Math.pow(player.x - otherPlayer.x, 2) +
-						Math.pow(player.y - otherPlayer.y, 2)
-				) <=
-				player.size + otherPlayer.size
-			) {
-				if (player.size > otherPlayer.size) {
-					player.size += otherPlayer.size;
-					playerList = playerList.filter(
-						(p) => p.playerId !== otherPlayer.playerId
-					);
-					playerMap.delete(otherPlayer.playerId);
-					io.emit("playerEaten", otherPlayer.playerId);
-				} else {
-					otherPlayer.size += player.size;
-					playerList = playerList.filter(
-						(p) => p.playerId !== player.playerId
-					);
-					playerMap.delete(player.playerId);
-					io.emit("playerEaten", player.playerId);
-				}
+		if (otherPlayer.playerId !== player.playerId && isPlayerCollidingWithPlayer(player, otherPlayer)) {
+			if (player.size > otherPlayer.size) {
+				player.size += otherPlayer.size / 2;
+				removePlayer(otherPlayer);
+				io.emit("playerEaten", otherPlayer.playerId);
+			} else {
+				otherPlayer.size += player.size / 2;
+				removePlayer(player);
+				io.emit("playerEaten", player.playerId);
 			}
 		}
 	}
 }
 
+function isPlayerCollidingWithFood(player: Player, food: Food): boolean {
+	const distance = Math.sqrt(Math.pow(player.x - food.x, 2) + Math.pow(player.y - food.y, 2));
+	return distance <= player.size + 3;
+}
+
+function isPlayerCollidingWithPlayer(player: Player, otherPlayer: Player): boolean {
+	const distance = Math.sqrt(Math.pow(player.x - otherPlayer.x, 2) + Math.pow(player.y - otherPlayer.y, 2));
+	return distance <= player.size + otherPlayer.size;
+}
+
+function removePlayer(player: Player) {
+	playerList = playerList.filter(p => p.playerId !== player.playerId);
+	playerMap.delete(player.playerId);
+}
+
 const ARENA_SIZE = 2000;
 
 function keepInBounds(player: Player) {
-	if (player.x - player.size < 0) {
-		player.x = player.size;
-	} else if (player.x + player.size > ARENA_SIZE) {
-		player.x = ARENA_SIZE - player.size;
-	}
+	const minBound = player.size;
+	const maxBound = ARENA_SIZE - player.size;
 
-	if (player.y - player.size < 0) {
-		player.y = player.size;
-	} else if (player.y + player.size > ARENA_SIZE) {
-		player.y = ARENA_SIZE - player.size;
-	}
+	player.x = Math.max(minBound, Math.min(player.x, maxBound));
+	player.y = Math.max(minBound, Math.min(player.y, maxBound));
 }
 
 class Player {
