@@ -49,7 +49,7 @@ export default class MainGame extends Phaser.Scene {
 		});
 		if (currentPlayer != undefined) {
 			this.cameras.main.centerOn(currentPlayer.circle.x, currentPlayer.circle.y);
-			const minZoom = 0.001;
+			const minZoom = 0.1;
 			const maxZoom = 1;
 			const minPlayerSize = 10; // Minimum player size
 			const maxPlayerSize = 1000; // Maximum player size you expect
